@@ -1,0 +1,19 @@
+colony: test
+
+start:
+    moveForward
+    emitPheromone 
+    if i_was_blocked_from_moving then goto turnAround
+    goto start
+
+turnAround:
+    rotateCounterClockwise
+    rotateCounterClockwise
+    moveForward
+    moveForward
+    if i_smell_pheromone_in_front_of_me then goto turn
+    goto start
+
+turn:
+    rotateCounterClockwise
+    goto start
