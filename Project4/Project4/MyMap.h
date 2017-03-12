@@ -3,6 +3,7 @@
 // Skeleton for the MyMap class template.  You must implement the first six
 // member functions.
 
+#include "support.h"
 template<typename KeyType, typename ValueType>
 
 class MyMap
@@ -86,7 +87,7 @@ void MyMap<KeyType, ValueType>::associate(const KeyType & key, const ValueType& 
                 m_MapSize++;
                 return;
             }
-        } else if(key > cur->key){
+        } else if(cur->key < key){
             if(cur->rhs != nullptr)
                 cur = cur->rhs;
             else {
