@@ -7,6 +7,7 @@
 //
 
 #include "provided.h"
+#include "MyMap.h"
 #include <string>
 using namespace std;
 
@@ -17,22 +18,39 @@ public:
     ~AttractionMapperImpl();
     void init(const MapLoader& ml);
     bool getGeoCoord(string attraction, GeoCoord& gc) const;
+private:
+    MyMap<string, GeoCoord> m_map;
 };
 
 AttractionMapperImpl::AttractionMapperImpl()
-{
-}
+{} //I don't think I have to do anything?
 
 AttractionMapperImpl::~AttractionMapperImpl()
-{
-}
+{} //Not sure what I have to destroy
 
 void AttractionMapperImpl::init(const MapLoader& ml)
 {
+    StreetSegment seg;
+    int numSegments = ml.getNumSegments();
+    for(int i = 0; i < numSegments; i++){
+        bool checkSegment = ml.getSegment(i, seg);
+        if(checkSegment){
+            for(int i = 0; i < seg.attractions.size(); i++){
+                string attractName = seg.attractions[i].name;
+                GeoCoord attractGeo = seg.attractions[i].geocoordinates;
+                m_map.associate(attractName, attractGeo);
+            }
+        }
+    }
 }
 
 bool AttractionMapperImpl::getGeoCoord(string attraction, GeoCoord& gc) const
 {
+    const GeoCoord * geoPointer = m_map.find(attraction);
+    if(geoPointer != nullptr){
+        gc = *geoPointer;
+        return true;
+    }
     return false;  // This compiles, but may not be correct
 }
 

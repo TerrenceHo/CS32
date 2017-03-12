@@ -70,7 +70,7 @@ bool MapLoaderImpl::load(string mapFile) //CHECK THIS OUT LATER
             attract.name = s.substr(0, s.find("|"));
             string location = s.substr(s.find("|") + 1, s.size());
             GeoCoord attractGeo (location.substr(0, location.find(",")),
-                                 location.substr(location.find(",") + 1, location.size()));
+                                 location.substr(location.find(",") + 2, location.size()));
             attract.geocoordinates = attractGeo;
             
             seg.attractions.push_back(attract);
@@ -89,12 +89,12 @@ size_t MapLoaderImpl::getNumSegments() const //Is this interpretation correct? T
 }
 
 bool MapLoaderImpl::getSegment(size_t segNum, StreetSegment &seg) const
-{//Check if this is all you have to do
+{//Check if this is all you have to do TODO
     if(segNum < 0 or segNum >= getNumSegments())
         return false;
     
     seg = m_streets[segNum];
-    return false;  // This compiles, but may not be correct
+    return true;  // This compiles, but may not be correct
 }
 
 //******************** MapLoader functions ************************************
