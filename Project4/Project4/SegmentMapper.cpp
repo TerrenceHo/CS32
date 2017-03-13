@@ -32,27 +32,43 @@ void SegmentMapperImpl::init(const MapLoader& ml)
     for(int i = 0; i < numSegments; i++){
         bool checkSegment = ml.getSegment(i, seg);
         if(checkSegment){
-            const vector<StreetSegment> * streetPointer = m_map.find(seg.segment.start);
-            if(streetPointer != nullptr){
+            vector<StreetSegment> * streetPointer = m_map.find(seg.segment.start);
+            if(streetPointer != nullptr)
                 streetPointer->push_back(seg);
-            } else {
-                vector<StreetSegment>
+            else {
+                vector<StreetSegment> streets1;
+                streets1.push_back(seg);
+                m_map.associate(seg.segment.start, streets1);
             }
             streetPointer = m_map.find(seg.segment.end);
-            if(streetPointer != nullptr){
-                
-            } else {
-                
+            if(streetPointer != nullptr)
+                streetPointer->push_back(seg);
+            else {
+                vector<StreetSegment> streets2;
+                streets2.push_back(seg);
+                m_map.associate(seg.segment.start, streets2);            }
+            for(int j = 0; j < seg.attractions.size(); i++){
+                streetPointer = m_map.find(seg.attractions[i].geocoordinates);
+                if(streetPointer != nullptr)
+                    streetPointer->push_back(seg);
+                else {
+                    vector<StreetSegment> streets3;
+                    streets3.push_back(seg);
+                    m_map.associate(seg.segment.start, streets3);
+                }
             }
         }
     }
-
 }
 
 vector<StreetSegment> SegmentMapperImpl::getSegments(const GeoCoord& gc) const
 {
+    const vector<StreetSegment> * streetVec = m_map.find(gc);
+    if(streetVec != nullptr){
+        return *streetVec;
+    }
     vector<StreetSegment> segments;
-    return segments;  // This compiles, but may not be correct
+    return segments; // This compiles, but may not be correct
 }
 
 //******************** SegmentMapper functions ********************************

@@ -28,6 +28,8 @@ void testMap(){ //TESTING INITIAL MAP
     v = *GPAHolder.find("Chloe");
     assert(GPAHolder.size() == 5);
     assert(v == 8);
+    v = *GPAHolder.find("Shirley");
+    assert (v == 0);
     
     GPAHolder.clear();
     assert(GPAHolder.size() == 0);

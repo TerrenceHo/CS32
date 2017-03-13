@@ -93,7 +93,15 @@ bool MapLoaderImpl::getSegment(size_t segNum, StreetSegment &seg) const
     if(segNum < 0 or segNum >= getNumSegments())
         return false;
     
-    seg = m_streets[segNum];
+    seg = m_streets[segNum]; //Is this correct?
+    
+//    Do we need this??
+//    seg.streetName = m_streets[segNum].streetName;
+//    seg.segment.start = m_streets[segNum].segment.start;
+//    seg.segment.end = m_streets[segNum].segment.end;
+//    for(int i = 0; i < seg.attractions.size(); i++){
+//        
+//    }
     return true;  // This compiles, but may not be correct
 }
 
