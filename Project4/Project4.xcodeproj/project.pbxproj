@@ -73,12 +73,12 @@
 			isa = PBXGroup;
 			children = (
 				D27259C21E74A05900C527A3 /* MyMap.h */,
-				D27259C11E74A05900C527A3 /* Navigator.cpp */,
-				D27259C51E74A09000C527A3 /* provided.h */,
-				D27259B71E749E8B00C527A3 /* main.cpp */,
 				D26C07311E7770F900AB6488 /* MapLoader.cpp */,
 				D26C07321E7770F900AB6488 /* AttractionMapper.cpp */,
 				D26C07331E7770F900AB6488 /* SegmentMapper.cpp */,
+				D27259C11E74A05900C527A3 /* Navigator.cpp */,
+				D27259B71E749E8B00C527A3 /* main.cpp */,
+				D27259C51E74A09000C527A3 /* provided.h */,
 				D27259C81E74A32300C527A3 /* support.h */,
 				D27259C71E74A32300C527A3 /* support.cpp */,
 				D27259CB1E74A34400C527A3 /* mapdata.txt */,

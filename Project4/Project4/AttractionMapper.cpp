@@ -8,7 +8,7 @@
 
 #include "provided.h"
 #include "MyMap.h"
-#include <string>
+//#include <string>
 using namespace std;
 
 class AttractionMapperImpl

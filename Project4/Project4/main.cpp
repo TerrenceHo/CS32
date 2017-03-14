@@ -1,6 +1,7 @@
 // The main.cpp you can use for testing will replace this file soon.
 
 #include "provided.h"
+#include "support.h"
 #include "MyMap.h"
 #include <string>
 #include <iostream>
@@ -28,8 +29,9 @@ void testMap(){ //TESTING INITIAL MAP
     v = *GPAHolder.find("Chloe");
     assert(GPAHolder.size() == 5);
     assert(v == 8);
-    v = *GPAHolder.find("Shirley");
-    assert (v == 0);
+    int * v2 = GPAHolder.find("Shirley");
+//    v = *GPAHolder.find("Shirley");
+    assert (v2 == nullptr);
     
     GPAHolder.clear();
     assert(GPAHolder.size() == 0);

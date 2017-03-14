@@ -3,7 +3,9 @@
 // Skeleton for the MyMap class template.  You must implement the first six
 // member functions.
 
-//#include "support.h"
+#ifndef MYMAP_INCLUDED
+#define MYMAP_INCLUDED
+#include "support.h"
 template<typename KeyType, typename ValueType>
 
 class MyMap
@@ -130,15 +132,6 @@ const ValueType* MyMap<KeyType, ValueType>:: search(const KeyType& key, Node * c
     
 }
 
-/////////////////////////////Overload Operators
-bool operator<(const GeoCoord &lhs, const GeoCoord &rhs) {
-    if(lhs.latitude == rhs.latitude)
-        return lhs.longitude < rhs.longitude;
-    return lhs.latitude < rhs.latitude;
-}
 
-bool operator ==(const GeoCoord &lhs, const GeoCoord &rhs){
-    return (lhs.latitude == rhs.latitude) and (lhs.longitude == rhs.longitude);
-}
-
+#endif // FUCK YOU SMALLBERG
 

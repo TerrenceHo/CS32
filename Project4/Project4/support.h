@@ -8,8 +8,10 @@
 
 #ifndef support_hpp
 #define support_hpp
-
-#include "Provided.h"
+#include "provided.h"
+/////////////////////////////Overload Operators
+bool operator<(const GeoCoord &lhs, const GeoCoord &rhs);
+bool operator ==(const GeoCoord &lhs, const GeoCoord &rhs);
 
 
 #endif /* support_hpp */
