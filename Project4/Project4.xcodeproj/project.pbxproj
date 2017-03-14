@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D26C07341E7770F900AB6488 /* MapLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D26C07311E7770F900AB6488 /* MapLoader.cpp */; };
+		D26C07351E7770F900AB6488 /* AttractionMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D26C07321E7770F900AB6488 /* AttractionMapper.cpp */; };
+		D26C07361E7770F900AB6488 /* SegmentMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D26C07331E7770F900AB6488 /* SegmentMapper.cpp */; };
 		D27259B81E749E8B00C527A3 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D27259B71E749E8B00C527A3 /* main.cpp */; };
-		D27259C01E749F5F00C527A3 /* AttractionMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D27259BE1E749F5F00C527A3 /* AttractionMapper.cpp */; };
 		D27259C31E74A05900C527A3 /* Navigator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D27259C11E74A05900C527A3 /* Navigator.cpp */; };
-		D27259C61E74A09000C527A3 /* SegmentMapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D27259C41E74A09000C527A3 /* SegmentMapper.cpp */; };
 		D27259C91E74A32300C527A3 /* support.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D27259C71E74A32300C527A3 /* support.cpp */; };
 /* End PBXBuildFile section */
 
@@ -27,13 +28,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D26C07311E7770F900AB6488 /* MapLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapLoader.cpp; sourceTree = "<group>"; };
+		D26C07321E7770F900AB6488 /* AttractionMapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AttractionMapper.cpp; sourceTree = "<group>"; };
+		D26C07331E7770F900AB6488 /* SegmentMapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SegmentMapper.cpp; sourceTree = "<group>"; };
 		D27259B41E749E8B00C527A3 /* Project4 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Project4; sourceTree = BUILT_PRODUCTS_DIR; };
 		D27259B71E749E8B00C527A3 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		D27259BE1E749F5F00C527A3 /* AttractionMapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AttractionMapper.cpp; sourceTree = "<group>"; };
-		D27259BF1E749F5F00C527A3 /* MapLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapLoader.cpp; sourceTree = "<group>"; };
 		D27259C11E74A05900C527A3 /* Navigator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Navigator.cpp; sourceTree = "<group>"; };
 		D27259C21E74A05900C527A3 /* MyMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMap.h; sourceTree = "<group>"; };
-		D27259C41E74A09000C527A3 /* SegmentMapper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SegmentMapper.cpp; sourceTree = "<group>"; };
 		D27259C51E74A09000C527A3 /* provided.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = provided.h; sourceTree = "<group>"; };
 		D27259C71E74A32300C527A3 /* support.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = support.cpp; sourceTree = "<group>"; };
 		D27259C81E74A32300C527A3 /* support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = support.h; sourceTree = "<group>"; };
@@ -72,12 +73,12 @@
 			isa = PBXGroup;
 			children = (
 				D27259C21E74A05900C527A3 /* MyMap.h */,
-				D27259BF1E749F5F00C527A3 /* MapLoader.cpp */,
-				D27259BE1E749F5F00C527A3 /* AttractionMapper.cpp */,
-				D27259C41E74A09000C527A3 /* SegmentMapper.cpp */,
 				D27259C11E74A05900C527A3 /* Navigator.cpp */,
 				D27259C51E74A09000C527A3 /* provided.h */,
 				D27259B71E749E8B00C527A3 /* main.cpp */,
+				D26C07311E7770F900AB6488 /* MapLoader.cpp */,
+				D26C07321E7770F900AB6488 /* AttractionMapper.cpp */,
+				D26C07331E7770F900AB6488 /* SegmentMapper.cpp */,
 				D27259C81E74A32300C527A3 /* support.h */,
 				D27259C71E74A32300C527A3 /* support.cpp */,
 				D27259CB1E74A34400C527A3 /* mapdata.txt */,
@@ -144,9 +145,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D27259C91E74A32300C527A3 /* support.cpp in Sources */,
+				D26C07351E7770F900AB6488 /* AttractionMapper.cpp in Sources */,
+				D26C07341E7770F900AB6488 /* MapLoader.cpp in Sources */,
 				D27259B81E749E8B00C527A3 /* main.cpp in Sources */,
-				D27259C01E749F5F00C527A3 /* AttractionMapper.cpp in Sources */,
-				D27259C61E74A09000C527A3 /* SegmentMapper.cpp in Sources */,
+				D26C07361E7770F900AB6488 /* SegmentMapper.cpp in Sources */,
 				D27259C31E74A05900C527A3 /* Navigator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -31,13 +31,13 @@ AttractionMapperImpl::~AttractionMapperImpl()
 void AttractionMapperImpl::init(const MapLoader& ml)
 {
     StreetSegment seg;
-    int numSegments = ml.getNumSegments();
-    for(int i = 0; i < numSegments; i++){
+    size_t numSegments = ml.getNumSegments();
+    for(size_t i = 0; i < numSegments; i++){
         bool checkSegment = ml.getSegment(i, seg);
         if(checkSegment){
-            for(int i = 0; i < seg.attractions.size(); i++){
-                string attractName = seg.attractions[i].name;
-                GeoCoord attractGeo = seg.attractions[i].geocoordinates;
+            for(size_t j = 0; j < seg.attractions.size(); j++){
+                string attractName = seg.attractions[j].name;
+                GeoCoord attractGeo = seg.attractions[j].geocoordinates;
                 m_map.associate(attractName, attractGeo);
             }
         }

@@ -28,8 +28,8 @@ void SegmentMapperImpl::init(const MapLoader& ml)
     //For each streetsegment initialized, have to look in start, end, and each attraction
     
     StreetSegment seg;
-    int numSegments = ml.getNumSegments();
-    for(int i = 0; i < numSegments; i++){
+    size_t numSegments = ml.getNumSegments();
+    for(size_t i = 0; i < numSegments; i++){
         bool checkSegment = ml.getSegment(i, seg);
         if(checkSegment){
             vector<StreetSegment> * streetPointer = m_map.find(seg.segment.start);
@@ -46,9 +46,10 @@ void SegmentMapperImpl::init(const MapLoader& ml)
             else {
                 vector<StreetSegment> streets2;
                 streets2.push_back(seg);
-                m_map.associate(seg.segment.start, streets2);            }
-            for(int j = 0; j < seg.attractions.size(); i++){
-                streetPointer = m_map.find(seg.attractions[i].geocoordinates);
+                m_map.associate(seg.segment.start, streets2);
+            }
+            for(size_t j = 0; j < seg.attractions.size(); j++){
+                streetPointer = m_map.find(seg.attractions[j].geocoordinates);
                 if(streetPointer != nullptr)
                     streetPointer->push_back(seg);
                 else {

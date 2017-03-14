@@ -15,14 +15,41 @@
 #include <fstream>
 using namespace std;
 
+struct GeoCoord
+{
+    GeoCoord(std::string lat, std::string lon)
+    : latitudeText(lat), longitudeText(lon), latitude(std::stod(lat)), longitude(std::stod(lon))
+    {}
+    
+    GeoCoord()
+    : latitudeText("0"), longitudeText("0"), latitude(0), longitude(0)
+    {}
+    
+    std::string latitudeText;
+    std::string longitudeText;
+    double      latitude;
+    double      longitude;
+};
 
+struct GeoSegment
+{
+    GeoSegment(const GeoCoord& s, const GeoCoord& e)
+    : start(s), end(e)
+    {}
+    
+    GeoSegment()
+    {}
+    
+    GeoCoord start;
+    GeoCoord end;
+};
 
-int main(){
+void testInfile(){
     ifstream infile("/Users/kho/Downloads/skeleton/mapdata.txt");
     if ( ! infile )		        // Did opening the file fail?
     {
         cerr << "Error: Cannot open data.txt!" << endl;
-        return 0;
+        return;
     }
     string s;
     string t;
@@ -48,16 +75,35 @@ int main(){
     for(int i = 0; i < k; i++){
         
     }
-//    while(getline(infile, s)){
-//        cout << s << endl;
-//        getline(infile, t);
-//        cout << t << endl;
-//        infile >> k;
-//        infile.ignore(10000, '\n');
-//        for(int i = 0; i < k; i++){
-//            getline(infile, s);
-//            cout << s << endl;
-//        }
-//    }
+    //    while(getline(infile, s)){
+    //        cout << s << endl;
+    //        getline(infile, t);
+    //        cout << t << endl;
+    //        infile >> k;
+    //        infile.ignore(10000, '\n');
+    //        for(int i = 0; i < k; i++){
+    //            getline(infile, s);
+    //            cout << s << endl;
+    //        }
+    //    }
+    
+}
+
+void testStructCopy(GeoSegment & gs){ //Test for object copying
+    GeoCoord geo1("111", "111");
+    GeoCoord geo2("222", "222");
+    GeoSegment geoseg1(geo1, geo2);
+    gs = geoseg1;
+    
+    cout << gs.start.latitude << endl;
+    
+    cout << "All tests passed" << endl;
+}
+
+int main(){
+//    testInfile();
+    GeoSegment test_g_seg;
+    testStructCopy(test_g_seg);
+    cout << test_g_seg.start.latitude << endl;
 }
 

@@ -44,8 +44,8 @@ bool MapLoaderImpl::load(string mapFile) //CHECK THIS OUT LATER
 
     string s;
     while(getline(infile, s)){
-        StreetSegement seg;//create streetsegment
-        seg.streetname = s;//add streetsegment street name
+        StreetSegment seg;//create streetsegment
+        seg.streetName = s;//add streetsegment street name
         
         string g1, g2 = "";
         infile >> g1;//take in first two coordinates
@@ -58,7 +58,7 @@ bool MapLoaderImpl::load(string mapFile) //CHECK THIS OUT LATER
         g1 = g1.substr(0, g1.find(","));
         GeoCoord loc2 (g1, g2);//add into loc 2
         
-        GeoSement gseg (loc1, loc2);//combine into geosegment
+        GeoSegment gseg (loc1, loc2);//combine into geosegment
         seg.segment = gseg;
         
         int k;
@@ -76,7 +76,7 @@ bool MapLoaderImpl::load(string mapFile) //CHECK THIS OUT LATER
             seg.attractions.push_back(attract);
         }
         
-        m_streets.pushback(seg);
+        m_streets.push_back(seg);
         
     }
 
@@ -85,7 +85,7 @@ bool MapLoaderImpl::load(string mapFile) //CHECK THIS OUT LATER
 
 size_t MapLoaderImpl::getNumSegments() const //Is this interpretation correct? TODO
 {
-    return m_streets.size(); // This compiles, but may not be correct
+    return m_streets.size();
 }
 
 bool MapLoaderImpl::getSegment(size_t segNum, StreetSegment &seg) const

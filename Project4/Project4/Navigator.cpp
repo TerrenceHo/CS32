@@ -10,6 +10,10 @@ public:
     ~NavigatorImpl();
     bool loadMapData(string mapFile);
     NavResult navigate(string start, string end, vector<NavSegment>& directions) const;
+private:
+    MapLoader m_mapload;
+    AttractionMapper m_attractmap;
+    SegmentMapper m_segmap;
 };
 
 NavigatorImpl::NavigatorImpl()
@@ -21,12 +25,18 @@ NavigatorImpl::~NavigatorImpl()
 }
 
 bool NavigatorImpl::loadMapData(string mapFile)
-{
-    return false;  // This compiles, but may not be correct
+{//WHAT ELSE CAN FAIL?? TODO
+    bool loadCheck = m_mapload.load(mapFile);
+    if(!loadCheck)
+        return false;
+    m_attractmap.init(m_mapload);
+    m_segmap.init(m_mapload);
+    return true;
 }
 
 NavResult NavigatorImpl::navigate(string start, string end, vector<NavSegment> &directions) const
 {
+    
     return NAV_NO_ROUTE;  // This compiles, but may not be correct
 }
 
