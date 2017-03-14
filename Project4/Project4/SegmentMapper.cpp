@@ -46,7 +46,7 @@ void SegmentMapperImpl::init(const MapLoader& ml)
             else {
                 vector<StreetSegment> streets2;
                 streets2.push_back(seg);
-                m_map.associate(seg.segment.start, streets2);
+                m_map.associate(seg.segment.end, streets2);
             }
             for(size_t j = 0; j < seg.attractions.size(); j++){
                 streetPointer = m_map.find(seg.attractions[j].geocoordinates);
@@ -55,7 +55,7 @@ void SegmentMapperImpl::init(const MapLoader& ml)
                 else {
                     vector<StreetSegment> streets3;
                     streets3.push_back(seg);
-                    m_map.associate(seg.segment.start, streets3);
+                    m_map.associate(seg.attractions[j].geocoordinates, streets3);
                 }
             }
         }

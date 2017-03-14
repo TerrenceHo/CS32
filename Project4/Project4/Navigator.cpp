@@ -1,6 +1,7 @@
 #include "provided.h"
 //#include <string>
 //#include <vector>
+#include <cctype>
 using namespace std;
 
 class NavigatorImpl
@@ -14,6 +15,13 @@ private:
     MapLoader m_mapload;
     AttractionMapper m_attractmap;
     SegmentMapper m_segmap;
+    struct LocNode{
+        GeoCoord current;
+        double distance;
+        GeoCoord previous;
+    };
+    vector<LocNode> processedNode;
+    //GET PRIORITY QUEUE, must be less than.  Create Operator overload for LocNode and comparison function for Priority_queue
 };
 
 NavigatorImpl::NavigatorImpl()
@@ -36,6 +44,22 @@ bool NavigatorImpl::loadMapData(string mapFile)
 
 NavResult NavigatorImpl::navigate(string start, string end, vector<NavSegment> &directions) const
 {
+    directions.clear();
+    GeoCoord g1;
+    GeoCoord g2;
+    for(int i = 0; i < start.size(); i++)
+        tolower(start[i]);
+    for(int i = 0; i < end.size(); i++)
+        tolower(end[i]);
+    if(!m_attractmap.getGeoCoord(start, g1) or !m_attractmap.getGeoCoord(end, g2))
+        return NAV_BAD_SOURCE;
+    
+    vector<StreetSegment> streetVecStart = m_segmap.getSegments(g1);
+//    vector<StreetSegment> streetVec2 = m_segmap.getSegments(g2);
+    for(int i = 0; i < streetVecStart.size(); i++){
+        
+    }
+    
     
     return NAV_NO_ROUTE;  // This compiles, but may not be correct
 }

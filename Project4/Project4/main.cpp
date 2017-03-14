@@ -42,4 +42,5 @@ void testMap(){ //TESTING INITIAL MAP
 int main()
 {
     testMap();
+    
 }

@@ -12,6 +12,7 @@
 #include <random>
 #include <map>
 #include <cmath>
+#include <cctype>
 #include <fstream>
 using namespace std;
 
@@ -102,8 +103,14 @@ void testStructCopy(GeoSegment & gs){ //Test for object copying
 
 int main(){
 //    testInfile();
-    GeoSegment test_g_seg;
-    testStructCopy(test_g_seg);
-    cout << test_g_seg.start.latitude << endl;
+//    GeoSegment test_g_seg;
+//    testStructCopy(test_g_seg);
+//    cout << test_g_seg.start.latitude << endl;
+    
+    string imright = "I'm totally right";
+    for(int i = 0; i < imright.size(); i++){
+        imright[i] = tolower(imright[i]);
+    }
+    cout << imright << endl;
 }
 

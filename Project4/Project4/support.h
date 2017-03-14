@@ -11,6 +11,7 @@
 #include "provided.h"
 /////////////////////////////Overload Operators
 bool operator<(const GeoCoord &lhs, const GeoCoord &rhs);
+bool operator>(const GeoCoord &lhs, const GeoCoord &rhs);
 bool operator ==(const GeoCoord &lhs, const GeoCoord &rhs);
 
 

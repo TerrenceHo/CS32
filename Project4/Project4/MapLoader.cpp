@@ -9,6 +9,7 @@
 #include "provided.h"
 #include <iostream>
 #include <fstream>
+#include <cctype>
 //#include <vector>
 //#include <string>
 using namespace std;
