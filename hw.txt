@@ -1,15 +1,61 @@
-2)  Insert with one argument compares the values of what is inserted to determine where the inserted parameter should go.  However, there is no way for insert to determine what which imaginary number class is greater than another, since such comparisons are not built into the compiler and imaginary numbers are of a custom class.  In order to make this work, you need to override a > operator overload so that when it is compared, the compiler knows how to compare imaginary numbers.
+ 1)
+ a)                             50
 
-3) 
-b)
-Without the second parameter, you do not know what path the file came from, and so it is impossible to print the file name at the very end.  Thus, in order to print out a file name with only one parameter, you would have to recurse down to the lowest file and then return the file names and print it out at the very top of the file path.  However, this solution only works if you don't have divergent file paths: this solution only allows you to return only one file path, and if there are multiple file paths, recursion in the method does not work and there are conflicts.  Thus, printing out the file path must require at least two parameters, one to hold the previous file name and one to hold the pointer to a file.
+                         20            60
 
-4) 
-a) O(N^3)  The function contains three nested for-loops, all of which go from 0 -> N times, or scale linearly with N and have a constant run-time.  The inner-most for-loop, which goes from 0->N is skipped occasionally if i == j, but this is rare and so in the worst case all 3 nested loops run.  Since the loops are nested, the time-complexity of each outer loop is increased by the number of times the inner loops run, which as stated before all run N times.  Thus, this function has a time complexity of O(N^3).  
+                   10          40           70
 
-b) O(N^3) This function is also O(N^3) because even though the second loop only increases as the first loop gets larger, in the worst case the second loops N - 1 times, which essentially means this loop scales linearly with N as well.  With 3 nested loops that are of O(N) complexity, this function has O(N^3).
+                      15    30            65     80
+                           25  35             75
+    
 
-5) 
-a) O(N^2)  At face value, this function seems to have a time complexity of O(N) with 2 forloops that go through a loop N times.  However, since the get functions potentially also have to traverse through the same linked list N times in the worst case, and get is called everytime within every iteration of the first forloop.  Thus this function has a time complexity of O(N^2).
+b)  In-Order: 10,15,20,25,30,35,40,50,60,65,70,75,80
+    Pre-Order: 50,20,10,15,40,30,25,35,60,70,65,80,75
+    Post-Order: 15,10,25,35,30,40,20,65,75,80,70,60,50
 
-b) O(N)  This function has two forloops that have a time complexity of N.  The forloops don't call any function that has a scaling time complexity, as insertBefore inserts a Node to the end of the linked list, requuiring only one access to the forloop.  Thus, the function is O(N), and this function is way better than the previous function, since it is one order of magnitude faster, since this function scales linearly and the previous function scales in a squared manner.
+c)after deleting 30)             50
+
+                         20            60
+
+                   10          40           70
+
+                      15    25            65     80
+                              35              75
+
+
+after deleting 20               50
+
+                          15         60
+
+                   10          40           70
+
+                            25            65     80
+                              35               75
+
+2) a)
+Node {
+    Node * parent;
+    Node * lhs;
+    Node * rhs;
+    int data;
+}
+
+b) 
+void insert(Node * curr, int value,){
+    insertHelper(curr, value, nullptr) //Call the recursive insert
+}
+
+void insertHelper(Node * curr, int value, Node * parent){
+    if(curr == nullptr)
+        create a new node here with value, and set its parent equal to parent
+    else if(value < curr.data)
+        call insertHelper with parameters curr.lhs, value, curr
+    else if(value > curr.data)
+        call insertHelper with parameters curr.rhs, value, curr
+}
+
+
+
+
+
+
