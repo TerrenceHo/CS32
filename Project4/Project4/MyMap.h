@@ -35,9 +35,9 @@ private:
     public:
         KeyType key;
         ValueType value;
-        Node * rhs;
         Node * lhs;
-        Node(const KeyType& k, const ValueType& v):key(k), value(v), rhs(nullptr), lhs(nullptr){}
+        Node * rhs;
+        Node(const KeyType& k, const ValueType& v):key(k), value(v), lhs(nullptr), rhs(nullptr){}
     };
     Node * m_root;
     int m_MapSize;

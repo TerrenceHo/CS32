@@ -39,8 +39,55 @@ void testMap(){ //TESTING INITIAL MAP
     cout << "All tests passed" << endl;
 }
 
+void testSegmentMapper(){
+    MapLoader ml;
+    ml.load("/Users/kho/Desktop/CS32/Project4/Project4/mapdata.txt");
+    SegmentMapper sm;
+    sm.init(ml);
+    
+    GeoCoord lookMeUp("34.0572000", "-118.4417620");
+    std::vector<StreetSegment> vecOfAssociatedSegs(sm.getSegments(lookMeUp));
+    if (vecOfAssociatedSegs.empty())
+    {
+        cout << "Error - no segments found matching this coordinate\n";
+        return;
+    }
+    cout << "Here are all the segments associated with your coordinate:" << endl;
+    for (auto s: vecOfAssociatedSegs)
+    {
+        cout << "Segment’s street: " << s.streetName << endl;
+        cout << "Segment’s start lat/long: " << s.segment.start.latitude << ", " <<
+        s.segment.start.longitude << endl;
+        cout << "Segment’s end lat/long: " << s.segment.end.latitude << ", " <<
+        s.segment.end.longitude << endl;
+        cout << "This segment has " << s.attractions.size() <<
+        " attractions on it." << endl;
+    }
+    
+    cout << "All tests passed" << endl;
+}
+
+void testAttractionMapper(){
+    MapLoader ml;
+//    ml.load("/Users/kho/Desktop/CS32/Project4/Project4/mapdata.txt");
+    ml.load("mapdata.txt");
+    AttractionMapper am;
+    am.init(ml); // let our object build its internal data structures
+    // by iterating thru all segments from the MapLoader object
+    GeoCoord fillMe;
+    string attraction = "The Coffee Bean & Tea Leaf";
+    bool found = am.getGeoCoord(attraction, fillMe);
+    if ( ! found)
+    {
+        cout << "No geolocation found for " << attraction << endl;
+        return;
+    }
+    cout << "The location of " << attraction << " is " << fillMe.latitude << ", " << fillMe.longitude << endl;
+}
+
 int main()
 {
-    testMap();
-    
+//    testMap();
+//    testSegmentMapper();
+    testAttractionMapper();
 }

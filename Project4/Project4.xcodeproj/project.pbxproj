@@ -38,8 +38,8 @@
 		D27259C51E74A09000C527A3 /* provided.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = provided.h; sourceTree = "<group>"; };
 		D27259C71E74A32300C527A3 /* support.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = support.cpp; sourceTree = "<group>"; };
 		D27259C81E74A32300C527A3 /* support.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = support.h; sourceTree = "<group>"; };
-		D27259CA1E74A34400C527A3 /* validlocs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = validlocs.txt; path = ../../../../Downloads/skeleton/validlocs.txt; sourceTree = "<group>"; };
-		D27259CB1E74A34400C527A3 /* mapdata.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mapdata.txt; path = ../../../../Downloads/skeleton/mapdata.txt; sourceTree = "<group>"; };
+		D282D2541E79F4C600DDDC4E /* validlocs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = validlocs.txt; sourceTree = "<group>"; };
+		D282D2551E79F4C600DDDC4E /* mapdata.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mapdata.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,8 +81,8 @@
 				D27259C51E74A09000C527A3 /* provided.h */,
 				D27259C81E74A32300C527A3 /* support.h */,
 				D27259C71E74A32300C527A3 /* support.cpp */,
-				D27259CB1E74A34400C527A3 /* mapdata.txt */,
-				D27259CA1E74A34400C527A3 /* validlocs.txt */,
+				D282D2541E79F4C600DDDC4E /* validlocs.txt */,
+				D282D2551E79F4C600DDDC4E /* mapdata.txt */,
 			);
 			path = Project4;
 			sourceTree = "<group>";

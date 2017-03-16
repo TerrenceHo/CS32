@@ -54,6 +54,38 @@ void insertHelper(Node * curr, int value, Node * parent){
         call insertHelper with parameters curr.rhs, value, curr
 }
 
+3)a)                            8
+
+                         3              6
+
+                   0         2      4       
+
+                      
+item = 10 
+item = 9
+
+b) Array = {8, 3, 6, 0 , 2, 4} count = 6
+
+c)                              6
+
+                         3              4
+
+                   0         2            
+
+
+item = 8 
+
+
+4)
+a)O(C+S)
+b)O(log(C) + S)
+c)O(log(C) + log(C))
+d)O(log(C))
+e)O(1)
+f)O(log(C) )
+g)O(C + )
+h)
+
 
 
 
