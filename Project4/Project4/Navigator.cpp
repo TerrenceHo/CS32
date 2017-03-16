@@ -73,7 +73,6 @@ bool NavigatorImpl::loadMapData(string mapFile)
 NavResult NavigatorImpl::navigate(string start, string end, vector<NavSegment> &directions) const
 {
     directions.clear();//Directions should be cleared
-    
     vector<LocNode> processedNodes;//Vector where Nodes we have passed through will go
     priority_queue<LocNode, vector<LocNode>, myComparator> pq; //Queue to determine which Node to process
     
@@ -91,9 +90,13 @@ NavResult NavigatorImpl::navigate(string start, string end, vector<NavSegment> &
         return NAV_BAD_SOURCE;
     if(!m_attractmap.getGeoCoord(end, gEnd))
         return NAV_BAD_DESTINATION;
-        
+    
+    //Get street segment the attraction is located at GeoCoord
+    vector<StreetSegment> streetVecStart = m_segmap.getSegments(gStart);
+    GeoCoord firstGeo = streetVecStart.back().segment.start;
+    LocNode geoStart(firstGeo, 0, distanceEarthMiles(firstGeo, gEnd), firstGeo, streetVecStart.back().streetName);
+    //Node to be pushed in is a street segement that attraction is affiliated with
     //Push start coordinate to be processed
-    LocNode geoStart(gStart, 0, distanceEarthMiles(gStart, gEnd), gStart, "");
     pq.push(geoStart);
     
     bool foundRoute = false;
@@ -119,7 +122,7 @@ NavResult NavigatorImpl::navigate(string start, string end, vector<NavSegment> &
         }//If back of processed nodes is the end goal, then stop while loop
         //otherise, we have to go through and add more streetsegments
         //get associated street segments
-        vector<StreetSegment> streetVecStart = m_segmap.getSegments(processedNodes.back().getCurrent());
+        streetVecStart = m_segmap.getSegments(processedNodes.back().getCurrent());
         for(int i = 0; i < streetVecStart.size(); i++){
             GeoCoord newGeo;
             bool addedGeoCoord = false;
@@ -154,7 +157,7 @@ NavResult NavigatorImpl::navigate(string start, string end, vector<NavSegment> &
             
             //Else we are adding a new Node for a location
             //get distances for heuristics
-            double distanceT = distanceEarthMiles(processedNodes.back().getCurrent(), newGeo);
+            double distanceT = distanceEarthMiles(processedNodes.back().getCurrent(), newGeo) + processedNodes.back().getTravelled();
             double distanceR = distanceEarthMiles(gEnd, newGeo);
             street_name = streetVecStart[i].streetName; //get street name
             LocNode newNode (newGeo, distanceT, distanceR, processedNodes.back().getCurrent(), street_name);
@@ -188,7 +191,7 @@ NavResult NavigatorImpl::navigate(string start, string end, vector<NavSegment> &
     while(!correctNodes.empty()){
         GeoSegment newSeg (processedNodes.back().getCurrent(), correctNodes.back().getCurrent());
         string direction = directionOfLine(newSeg);
-        NavSegment newNavSeg (direction, correctNodes.back().getStreetName(), distanceEarthKM(newSeg.start, newSeg.end), newSeg);
+        NavSegment newNavSeg (direction, correctNodes.back().getStreetName(), distanceEarthMiles(newSeg.start, newSeg.end), newSeg);
         
         //We are always going to have a NagSeg, but if the street names are different, push a NavTurn first
         if(!directions.empty() and newNavSeg.m_streetName != directions.back().m_streetName){

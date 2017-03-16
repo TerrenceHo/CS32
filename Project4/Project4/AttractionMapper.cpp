@@ -37,6 +37,8 @@ void AttractionMapperImpl::init(const MapLoader& ml)
         if(checkSegment){
             for(size_t j = 0; j < seg.attractions.size(); j++){
                 string attractName = seg.attractions[j].name;
+                for(int k = 0; k < attractName.size(); k++)
+                    attractName[k] = tolower(attractName[k]);
                 GeoCoord attractGeo = seg.attractions[j].geocoordinates;
                 m_map.associate(attractName, attractGeo);
             }
@@ -46,6 +48,8 @@ void AttractionMapperImpl::init(const MapLoader& ml)
 
 bool AttractionMapperImpl::getGeoCoord(string attraction, GeoCoord& gc) const
 {
+    for(int i = 0; i < attraction.size(); i++)
+        attraction[i] = tolower(attraction[i]);
     const GeoCoord * geoPointer = m_map.find(attraction);
     if(geoPointer != nullptr){
         gc = *geoPointer;
