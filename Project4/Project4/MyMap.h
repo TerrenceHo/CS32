@@ -104,7 +104,7 @@ void MyMap<KeyType, ValueType>::associate(const KeyType & key, const ValueType& 
 template<typename KeyType, typename ValueType>
 const ValueType * MyMap<KeyType, ValueType>::find(const KeyType& key) const{
     return search(key, m_root); //Calls a recursive search function
-}
+}//TODO MUST MAKE CASE INSENSITIVE
 
 
 /////////////////////////////Private functions

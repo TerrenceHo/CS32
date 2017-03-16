@@ -49,8 +49,6 @@ private:
             return (n1.getTravelled() + n1.getRemaining()) > (n2.getTravelled() + n2.getRemaining());
         }
     };
-    
-    string getDirection(double angle) const;
 };
 
 
@@ -64,11 +62,11 @@ NavigatorImpl::~NavigatorImpl()
 
 bool NavigatorImpl::loadMapData(string mapFile)
 {//WHAT ELSE CAN FAIL?? TODO
-    bool loadCheck = m_mapload.load(mapFile);
+    bool loadCheck = m_mapload.load(mapFile);//Load the mapdata
     if(!loadCheck)
-        return false;
-    m_attractmap.init(m_mapload);
-    m_segmap.init(m_mapload);
+        return false;//if it was wrong return false
+    m_attractmap.init(m_mapload);//load in map of attractions
+    m_segmap.init(m_mapload);//load in map of segments
     return true;
 }
 
@@ -83,10 +81,10 @@ NavResult NavigatorImpl::navigate(string start, string end, vector<NavSegment> &
     GeoCoord gEnd;//End coordinate
     
     //Make all lowercase
-    for(int i = 0; i < start.size(); i++)
-        start[i] = tolower(start[i]);
-    for(int i = 0; i < end.size(); i++)
-        end[i] = tolower(end[i]);
+//    for(int i = 0; i < start.size(); i++)
+//        start[i] = tolower(start[i]);
+//    for(int i = 0; i < end.size(); i++)
+//        end[i] = tolower(end[i]);
     
     //Try to get attration geocoords, otherwise returns with negative Nav
     if(!m_attractmap.getGeoCoord(start, gStart))
@@ -100,6 +98,7 @@ NavResult NavigatorImpl::navigate(string start, string end, vector<NavSegment> &
     
     bool foundRoute = false;
     while(!pq.empty()){
+        //Check if this is a GeoCoord we have processed already.  If it is, don't process it
         bool topNotProcessed = true;
         for(int i = 0; i < processedNodes.size(); i++){
             if(pq.top().getCurrent() == processedNodes[i].getCurrent()){
@@ -111,59 +110,62 @@ NavResult NavigatorImpl::navigate(string start, string end, vector<NavSegment> &
         
         if(!topNotProcessed) continue; //If GeoCoord was already processed, don't repeat
         
-        processedNodes.push_back(pq.top());
-        pq.pop();
+        processedNodes.push_back(pq.top()); //Otherwise, push it back to ProcessedNodes
+        pq.pop();//remove from prio queue
         
         if(processedNodes.back().getCurrent() == gEnd){
             foundRoute = true;
             break;
-        }
-
+        }//If back of processed nodes is the end goal, then stop while loop
+        //otherise, we have to go through and add more streetsegments
+        //get associated street segments
         vector<StreetSegment> streetVecStart = m_segmap.getSegments(processedNodes.back().getCurrent());
         for(int i = 0; i < streetVecStart.size(); i++){
             GeoCoord newGeo;
             bool addedGeoCoord = false;
             string street_name;
-            if(streetVecStart[i].segment.start == processedNodes.back().getCurrent()){
+            
+            if(streetVecStart[i].segment.start == processedNodes.back().getCurrent() and !addedGeoCoord){
                 //If it starts are current location, push to end geocoord
                 street_name = streetVecStart[i].streetName;
                 newGeo = streetVecStart[i].segment.end;
                 addedGeoCoord = true;
-                
-            } else if(streetVecStart[i].segment.end == processedNodes.back().getCurrent()){
+            } else if(streetVecStart[i].segment.end == processedNodes.back().getCurrent() and !addedGeoCoord){
                 //if it starts with end, push the start geocoord
                 street_name = streetVecStart[i].streetName;
                 newGeo = streetVecStart[i].segment.start;
                 addedGeoCoord = true;
-            } else {
-                //if the attraction is the geocord we're looking for push it to queue
-                for(int j = 0; j < streetVecStart[i].attractions.size(); j++){
-                    if(streetVecStart[i].attractions[j].geocoordinates == gEnd){
-                        street_name = streetVecStart[i].streetName;
-                        newGeo = streetVecStart[i].attractions[j].geocoordinates;
-                        addedGeoCoord = true;
-                    }
+            }
+            //if the attraction is the end geocord we're looking for push it to queue
+            for(int j = 0; j < streetVecStart[i].attractions.size(); j++){
+                if(streetVecStart[i].attractions[j].geocoordinates == gEnd){
+                    street_name = streetVecStart[i].streetName;
+                    newGeo = streetVecStart[i].attractions[j].geocoordinates;
+                    addedGeoCoord = true;
                 }
             }
             
             if(!addedGeoCoord) continue; //If did not add a GeoCoord, skip rest
             for(int j = 0; j < processedNodes.size(); j++){
-                if(newGeo == processedNodes[i].getCurrent())
+                if(newGeo == processedNodes[j].getCurrent())
                     continue;
-            }//If we already processed the new node, then don't add it.
+            }//If we already been to the new node, then don't add it.
             
             
+            //Else we are adding a new Node for a location
+            //get distances for heuristics
             double distanceT = distanceEarthMiles(processedNodes.back().getCurrent(), newGeo);
             double distanceR = distanceEarthMiles(gEnd, newGeo);
+            street_name = streetVecStart[i].streetName; //get street name
             LocNode newNode (newGeo, distanceT, distanceR, processedNodes.back().getCurrent(), street_name);
-            pq.push(newNode);
+            pq.push(newNode);//create and push new node
         }
     }
     
     if(!foundRoute)
         return NAV_NO_ROUTE;  // If out of GeoCoords to process, there is no route there
 
-    //Add only nodes that in path to correctNodes, and pop everything else
+    //Add only nodes that are in correct nav path to correctNodes, and pop everything else
     vector<LocNode> correctNodes;
     GeoCoord nextTarget = processedNodes.back().getCurrent();
     while(!processedNodes.empty()){
@@ -171,34 +173,36 @@ NavResult NavigatorImpl::navigate(string start, string end, vector<NavSegment> &
             correctNodes.push_back(processedNodes.back());
 //            correctNodes.insert(correctNodes.begin(), processedNodes.back());
             nextTarget = processedNodes.back().getPrevious();
-        }
+        }//Use getPrevious() to track where Node connects to
         processedNodes.pop_back();
     }
+    
     //proceesedNodes is now empty.  Use it as a container now
     //correctNodes is in reverse order, where the back contains the start Node
     
-    //This is used to prep the loop
+    //This is used to prep the while loop
     processedNodes.push_back(correctNodes.back());
     correctNodes.pop_back();
-    GeoSegment newSeg (processedNodes.back().getCurrent(), correctNodes.back().getCurrent());
-    string direction = getDirection(angleOfLine(newSeg));
-    NavSegment newNav (direction, correctNodes.back().getStreetName(), distanceEarthKM(newSeg.start, newSeg.end), newSeg);
-    directions.push_back(newNav);
+    
     
     while(!correctNodes.empty()){
-        newSeg = GeoSegment (processedNodes.back().getCurrent(), correctNodes.back().getCurrent());
-        direction = getDirection(angleOfLine(newSeg));
-        newNav = NavSegment (direction, correctNodes.back().getStreetName(), distanceEarthKM(newSeg.start, newSeg.end), newSeg);
-        if(newNav.m_direction != directions.back().m_direction){
-            double newAngle = angleBetween2Lines(directions.back().m_geoSegment, newNav.m_geoSegment);
+        GeoSegment newSeg (processedNodes.back().getCurrent(), correctNodes.back().getCurrent());
+        string direction = directionOfLine(newSeg);
+        NavSegment newNavSeg (direction, correctNodes.back().getStreetName(), distanceEarthKM(newSeg.start, newSeg.end), newSeg);
+        
+        //We are always going to have a NagSeg, but if the street names are different, push a NavTurn first
+        if(!directions.empty() and newNavSeg.m_streetName != directions.back().m_streetName){
+            double newAngle = angleBetween2Lines(directions.back().m_geoSegment, newNavSeg.m_geoSegment);
             if(newAngle >= 180)
                 direction = "right";
             else
                 direction = "left";
-            NavSegment newTurn (direction, correctNodes.back().getStreetName());
-            directions.push_back(newTurn);
+            NavSegment newNavTurn (direction, newNavSeg.m_streetName);
+            directions.push_back(newNavTurn);
         }
-        directions.push_back(newNav);
+        directions.push_back(newNavSeg);
+        processedNodes.push_back(correctNodes.back());
+        correctNodes.pop_back();
     }
     
         
@@ -207,26 +211,7 @@ NavResult NavigatorImpl::navigate(string start, string end, vector<NavSegment> &
     return NAV_SUCCESS; //End condition, have found the last location
 }
 
-string NavigatorImpl:: getDirection(double angle) const{
-    if(angle >= 0 or angle <= 22.5)
-        return "east";
-    else if(angle > 22.5 or angle <= 67.5)
-        return "northest";
-    else if(angle > 67.5 or angle <= 112.5)
-        return "north";
-    else if(angle > 112.5 or angle <= 157.5)
-        return "northwest";
-    else if(angle > 157.5 or angle <= 202.5)
-        return "west";
-    else if(angle > 202.5 or angle <= 247.5)
-        return "southwest";
-    else if(angle > 247.5 or angle <= 292.5)
-        return "south";
-    else if(angle > 292.5 or angle <= 337.5)
-        return "southeast";
-    else //(angle > 337.5 or angle < 360)
-        return "east";
-}
+
 
 //******************** Navigator functions ************************************
 

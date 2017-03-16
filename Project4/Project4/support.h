@@ -13,6 +13,7 @@
 bool operator<(const GeoCoord &lhs, const GeoCoord &rhs);
 bool operator>(const GeoCoord &lhs, const GeoCoord &rhs);
 bool operator ==(const GeoCoord &lhs, const GeoCoord &rhs);
+std::string directionOfLine(const GeoSegment& gs);
 
 
 #endif /* support_hpp */
