@@ -79,11 +79,6 @@ NavResult NavigatorImpl::navigate(string start, string end, vector<NavSegment> &
     GeoCoord gStart;//Start coordinate
     GeoCoord gEnd;//End coordinate
     
-    //Make all lowercase
-//    for(int i = 0; i < start.size(); i++)
-//        start[i] = tolower(start[i]);
-//    for(int i = 0; i < end.size(); i++)
-//        end[i] = tolower(end[i]);
     
     //Try to get attration geocoords, otherwise returns with negative Nav
     if(!m_attractmap.getGeoCoord(start, gStart))
@@ -94,10 +89,15 @@ NavResult NavigatorImpl::navigate(string start, string end, vector<NavSegment> &
     //Get street segment the attraction is located at GeoCoord
     vector<StreetSegment> streetVecStart = m_segmap.getSegments(gStart);
     GeoCoord firstGeo = streetVecStart.back().segment.start;
-    LocNode geoStart(firstGeo, 0, distanceEarthMiles(firstGeo, gEnd), firstGeo, streetVecStart.back().streetName);
-    //Node to be pushed in is a street segement that attraction is affiliated with
-    //Push start coordinate to be processed
-    pq.push(geoStart);
+    GeoCoord secondGeo = streetVecStart.back().segment.end;
+    
+    LocNode geoStart(gStart, 0, distanceEarthMiles(gStart, gEnd), gStart, streetVecStart.back().streetName);
+    
+    LocNode geoFirst(firstGeo, distanceEarthMiles(gStart, firstGeo), distanceEarthMiles(firstGeo, gEnd), gStart, streetVecStart.back().streetName);
+    LocNode geoSecond(secondGeo, distanceEarthMiles(gStart, secondGeo), distanceEarthMiles(secondGeo, gEnd), gStart, streetVecStart.back().streetName);
+    pq.push(geoFirst);
+    pq.push(geoSecond);
+    processedNodes.push_back(geoStart);
     
     bool foundRoute = false;
     while(!pq.empty()){

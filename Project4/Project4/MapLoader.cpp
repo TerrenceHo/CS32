@@ -41,69 +41,78 @@ bool MapLoaderImpl::load(string mapFile) //CHECK THIS OUT LATER
     ifstream infile(mapFile);
     if(!infile){
         return false;
-    }
-
+    }//if error on infile for map, return false
+    
     string s;
-    while(getline(infile, s)){
+    while(getline(infile,s)){
         StreetSegment seg;//create streetsegment
         seg.streetName = s;//add streetsegment street name
         
-        string g1, g2 = "";
-        infile >> g1;//take in first two coordinates
-        infile >> g2;
-        g1.erase(g1.end() - 1);
-        GeoCoord loc1 (g1, g2);//add into loc 1
+        getline(infile, s);//get next line
+        string geo1 = s.substr(0, s.find(","));//first geocoord is before the comma
+        if(s[s.find(",") + 1] == ' ')//account for space after comma
+            s = s.substr(s.find(",") + 2, s.size() -1);//change s remove first geo from s
+        else
+            s = s.substr(s.find(",") + 1, s.size() -1);
         
-        infile >> g1;//Use substr to separate out coordiantes
-        g2 = g1.substr(g1.find(",") + 1,g1.size());
-        g1 = g1.substr(0, g1.find(","));
-        GeoCoord loc2 (g1, g2);//add into loc 2
+        string geo2 = s.substr(0, s.find(" "));//second geo ends at space
+        GeoCoord loc1 (geo1, geo2);//add into loc 1
+        
+        s = s.substr(s.find(" ") + 1, s.size()-1);//remove second geo from s
+        string geo3 = s.substr(0, s.find(","));//third geo is before comma
+        if(s[s.find(",") + 1] == ' ')//account for space after comma
+            s = s.substr(s.find(",") + 2, s.size() -1);//remove third geo from s
+        else
+            s = s.substr(s.find(",") + 1, s.size() -1);
+        string geo4 = s;//geo 4 is equal to remainder of s
+        GeoCoord loc2 (geo3, geo4);//add to loc2
         
         GeoSegment gseg (loc1, loc2);//combine into geosegment
         seg.segment = gseg;
         
-        int k;
-        infile >> k; //get attraction
+        
+        int numAttract = 0;
+        infile >> numAttract;//take in number of attractions
         infile.ignore(10000, '\n');
-        for(int i = 0; i < k; i++){//for each attraction there
-            Attraction attract;
-            getline(infile, s);
-            attract.name = s.substr(0, s.find("|"));
-            string location = s.substr(s.find("|") + 1, s.size());
-            GeoCoord attractGeo (location.substr(0, location.find(",")),
-                                 location.substr(location.find(",") + 2, location.size()));
-            attract.geocoordinates = attractGeo;
+        for(int i = 0; i < numAttract; i++){
+            getline(infile,s);//get next line(is an attractions)
+            string attractName = s.substr(0, s.find("|"));//attract name is before |
             
-            seg.attractions.push_back(attract);
+            s = s.substr(s.find("|") + 1, s.size() -1);//remove name from s
+            string geo5 = s.substr(0, s.find(","));//geo 5 is before comma
+            if(s[s.find(",") + 1] == ' ')//account for space after comma
+                s = s.substr(s.find(",") + 2, s.size() -1);//remove geo 5 from s
+            else
+                s = s.substr(s.find(",") + 1, s.size() -1);
+            string geo6 = s;//geo 6 is equal to rest of s
+            
+            Attraction attract;
+            attract.name = attractName;//set name of attraction
+            
+            GeoCoord attractGeo (geo5, geo6);//set geocoord of attraction
+            attract.geocoordinates = attractGeo;
+            seg.attractions.push_back(attract);//push it back to Streetsegments
         }
         
-        m_streets.push_back(seg);
-        
+        m_streets.push_back(seg);//push back to the streetsegment vector
     }
 
-    return true;  // This compiles, but may not be correct
+
+    return true;//went through eveything successfully
 }
 
 size_t MapLoaderImpl::getNumSegments() const //Is this interpretation correct? TODO
 {
-    return m_streets.size();
+    return m_streets.size();//return size
 }
 
 bool MapLoaderImpl::getSegment(size_t segNum, StreetSegment &seg) const
 {//Check if this is all you have to do TODO
-    if(segNum < 0 or segNum >= getNumSegments())
+    if(segNum < 0 or segNum >= getNumSegments())//if out of bounds, return false
         return false;
     
-    seg = m_streets[segNum]; //Is this correct?
-    
-//    Do we need this??
-//    seg.streetName = m_streets[segNum].streetName;
-//    seg.segment.start = m_streets[segNum].segment.start;
-//    seg.segment.end = m_streets[segNum].segment.end;
-//    for(int i = 0; i < seg.attractions.size(); i++){
-//        
-//    }
-    return true;  // This compiles, but may not be correct
+    seg = m_streets[segNum]; //set seg equal to the correct street segment
+    return true;  //return true to recognize that seg has changed
 }
 
 //******************** MapLoader functions ************************************

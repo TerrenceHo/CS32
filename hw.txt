@@ -3,7 +3,7 @@
 
                          20            60
 
-                   10          40           70
+                   10         40            70
 
                       15    30            65     80
                            25  35             75
@@ -46,11 +46,11 @@ void insert(Node * curr, int value,){
 }
 
 void insertHelper(Node * curr, int value, Node * parent){
-    if(curr == nullptr)
+    if curr == nullptr 
         create a new node here with value, and set its parent equal to parent
-    else if(value < curr.data)
+    else if value < curr.data 
         call insertHelper with parameters curr.lhs, value, curr
-    else if(value > curr.data)
+    else if value > curr.data 
         call insertHelper with parameters curr.rhs, value, curr
 }
 
@@ -61,8 +61,7 @@ void insertHelper(Node * curr, int value, Node * parent){
                    0         2      4       
 
                       
-item = 10 
-item = 9
+
 
 b) Array = {8, 3, 6, 0 , 2, 4} count = 6
 
@@ -73,18 +72,17 @@ c)                              6
                    0         2            
 
 
-item = 8 
 
 
 4)
 a)O(C+S)
 b)O(log(C) + S)
-c)O(log(C) + log(C))
-d)O(log(C))
+c)O(log(C) + log(S))
+d)O(log(S))
 e)O(1)
-f)O(log(C) )
-g)O(C + )
-h)
+f)O(log(C) + S)
+g)O(1 + S) = O(S)
+h)O(C * log(S))
 
 
 

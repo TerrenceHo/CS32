@@ -11,17 +11,21 @@
 using namespace std;
 
 void testMap();
+void testMapLoader();
 void testSegmentMapper();
 void testAttractionMapper();
+void testNavigator();
 
 void printDirectionsRaw(string start, string end, vector<NavSegment>& navSegments);
 void printDirections(string start, string end, vector<NavSegment>& navSegments);
 
 //int main()
 //{
-//    testMap();
-//    testSegmentMapper();
-//    testAttractionMapper();
+////    testMap();
+////    testMapLoader();
+////    testSegmentMapper();
+////    testAttractionMapper();
+//    testNavigator();
 //}
 
 int main(int argc, char *argv[])
@@ -79,6 +83,8 @@ int main(int argc, char *argv[])
     }
 }
 
+
+///////////////////////Testing Functions for Navigator
 void printDirectionsRaw(string start, string end, vector<NavSegment>& navSegments)
 {
     cout << "Start: " << start << endl;
@@ -190,6 +196,29 @@ void testMap(){ //TESTING INITIAL MAP
     cout << "All tests passed" << endl;
 }
 
+void testMapLoader(){
+    MapLoader ml;
+    assert(ml.load("/Users/kho/Desktop/CS32/Project4/Project4/testmap.txt"));
+    size_t numSegments = ml.getNumSegments();
+    assert(numSegments == 7);
+    bool foundAttraction = false;
+    for (size_t i = 0; i < numSegments; i++)
+    {
+        StreetSegment seg;
+        assert(ml.getSegment(i, seg));
+        if (seg.streetName == "Picadilly")
+        {
+            assert(seg.attractions.size() == 1);
+            assert(seg.attractions[0].name == "Eros Statue");
+            foundAttraction = true;
+            break;
+        }
+    }
+    assert(foundAttraction);
+    
+    cout << "All tests passed" << endl;
+}
+
 void testSegmentMapper(){
     MapLoader ml;
     ml.load("/Users/kho/Desktop/CS32/Project4/Project4/mapdata.txt");
@@ -234,4 +263,41 @@ void testAttractionMapper(){
         return;
     }
     cout << "The location of " << attraction << " is " << fillMe.latitude << ", " << fillMe.longitude << endl;
+}
+
+void testNavigator() {
+    Navigator nav;
+    assert(nav.loadMapData("/Users/kho/Desktop/CS32/Project4/Project4/testmap.txt"));
+    vector<NavSegment> directions;
+    assert(nav.navigate("Eros Statue", "Hamleys Toy Store", directions) == NAV_SUCCESS);
+    assert(directions.size() == 6);
+    struct ExpectedItem
+    {
+        NavSegment::NavCommand command;
+        string direction;
+        double distance;
+        string streetName;
+    };
+    const ExpectedItem expected[6] = {
+        { NavSegment::PROCEED, "northwest", 0.0138, "Picadilly" },
+        { NavSegment::TURN, "left", 0, "" },
+        { NavSegment::PROCEED, "west", 0.0119, "Regent Street" },
+        { NavSegment::PROCEED, "west", 0.0845, "Regent Street" },
+        { NavSegment::PROCEED, "west", 0.0696, "Regent Street" },
+        { NavSegment::PROCEED, "northwest", 0.1871, "Regent Street" },
+    };
+    for (size_t i = 0; i < 6; i++)
+    {
+        const NavSegment& ns = directions[i];
+        const ExpectedItem& exp = expected[i];
+        assert(ns.m_command == exp.command);
+        assert(ns.m_direction == exp.direction);
+        if (ns.m_command == NavSegment::PROCEED)
+        {
+            assert(abs(ns.m_distance - exp.distance) < 0.00051);
+            assert(ns.m_streetName == exp.streetName);
+        }
+    }
+    
+    cout << "All tests passed." << endl;
 }

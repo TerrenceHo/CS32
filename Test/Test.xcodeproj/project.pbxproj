@@ -25,8 +25,9 @@
 /* Begin PBXFileReference section */
 		D254A8571E47DF5C00950BFD /* Test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Test; sourceTree = BUILT_PRODUCTS_DIR; };
 		D254A85A1E47DF5C00950BFD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		D261461B1E74C4E90038AEC1 /* validlocs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = validlocs.txt; path = ../../../../Downloads/skeleton/validlocs.txt; sourceTree = "<group>"; };
-		D261461C1E74C4E90038AEC1 /* mapdata.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = mapdata.txt; path = ../../../../Downloads/skeleton/mapdata.txt; sourceTree = "<group>"; };
+		D27840511E7B360E009E559F /* testmap.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testmap.txt; sourceTree = "<group>"; };
+		D27840521E7B360E009E559F /* validlocs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = validlocs.txt; sourceTree = "<group>"; };
+		D27840531E7B360E009E559F /* mapdata.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mapdata.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,9 +60,10 @@
 		D254A8591E47DF5C00950BFD /* Test */ = {
 			isa = PBXGroup;
 			children = (
-				D261461B1E74C4E90038AEC1 /* validlocs.txt */,
-				D261461C1E74C4E90038AEC1 /* mapdata.txt */,
 				D254A85A1E47DF5C00950BFD /* main.cpp */,
+				D27840511E7B360E009E559F /* testmap.txt */,
+				D27840521E7B360E009E559F /* validlocs.txt */,
+				D27840531E7B360E009E559F /* mapdata.txt */,
 			);
 			path = Test;
 			sourceTree = "<group>";

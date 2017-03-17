@@ -32,27 +32,30 @@ void SegmentMapperImpl::init(const MapLoader& ml)
     for(size_t i = 0; i < numSegments; i++){
         bool checkSegment = ml.getSegment(i, seg);
         if(checkSegment){
+            //try to find streetsegments asscoated with start geocoord
             vector<StreetSegment> * streetPointer = m_map.find(seg.segment.start);
-            if(streetPointer != nullptr)
+            if(streetPointer != nullptr)//if found, simply push to back of vector
                 streetPointer->push_back(seg);
-            else {
+            else {//otherwise, associate start geocoord with new street segment
                 vector<StreetSegment> streets1;
                 streets1.push_back(seg);
                 m_map.associate(seg.segment.start, streets1);
             }
+            //try to find streetsegments asscoated with end geocoord
             streetPointer = m_map.find(seg.segment.end);
-            if(streetPointer != nullptr)
+            if(streetPointer != nullptr)//if found, simply push to back of vector
                 streetPointer->push_back(seg);
-            else {
+            else {///otherwise, associate end geocoord with new street segment
                 vector<StreetSegment> streets2;
                 streets2.push_back(seg);
                 m_map.associate(seg.segment.end, streets2);
             }
-            for(size_t j = 0; j < seg.attractions.size(); j++){
+            //try to find streetsegments asscoated with attraction geocoord
+            for(size_t j = 0; j < seg.attractions.size(); j++){//for each attraction
                 streetPointer = m_map.find(seg.attractions[j].geocoordinates);
-                if(streetPointer != nullptr)
+                if(streetPointer != nullptr)//if found, simply push to back of vector
                     streetPointer->push_back(seg);
-                else {
+                else {//otherwise, associate attraction geocoord with new street segment
                     vector<StreetSegment> streets3;
                     streets3.push_back(seg);
                     m_map.associate(seg.attractions[j].geocoordinates, streets3);
@@ -64,11 +67,11 @@ void SegmentMapperImpl::init(const MapLoader& ml)
 
 vector<StreetSegment> SegmentMapperImpl::getSegments(const GeoCoord& gc) const
 {
-    const vector<StreetSegment> * streetVec = m_map.find(gc);
+    const vector<StreetSegment> * streetVec = m_map.find(gc);//find vector of streetsegments with geocoord
     if(streetVec != nullptr){
-        return *streetVec;
+        return *streetVec;//if found, return vector
     }
-    vector<StreetSegment> segments;
+    vector<StreetSegment> segments;//otherwise return empty vector
     return segments; // This compiles, but may not be correct
 }
 

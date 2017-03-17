@@ -46,47 +46,55 @@ struct GeoSegment
 };
 
 void testInfile(){
-    ifstream infile("/Users/kho/Downloads/skeleton/mapdata.txt");
+    ifstream infile("/Users/kho/Desktop/CS32/Test/Test/testmap.txt");
+//    ifstream infile("/Users/kho/Desktop/CS32/Test/Test/mapdata.txt");
     if ( ! infile )		        // Did opening the file fail?
     {
         cerr << "Error: Cannot open data.txt!" << endl;
         return;
     }
     string s;
-    string t;
-    int k;
-    int j;
-    getline(infile, s);
-    cout << s << endl;
-    string g1, g2 = "";
-    infile >> g1;
-    infile >> g2;
-    g1.erase(g1.end() - 1);
-    cout << g1 << endl;
-    cout << g2 << endl;
-    
-    infile >> g1;
-    g2 = g1.substr(g1.find(",") + 1,g1.size());
-    g1 = g1.substr(0, g1.find(","));
-    cout << g1 << endl;
-    cout << g2 << endl;
-    
-    infile >> k;
-    cout << k << endl;
-    for(int i = 0; i < k; i++){
+    while(getline(infile,s)){
+        cout << s << endl;
         
+        getline(infile, s);
+        string geo1 = s.substr(0, s.find(","));
+        if(s[s.find(",") + 1] == ' ')
+            s = s.substr(s.find(",") + 2, s.size() -1);
+        else
+            s = s.substr(s.find(",") + 1, s.size() -1);
+        
+        string geo2 = s.substr(0, s.find(" "));
+        cout << geo1 << ", " << geo2 << endl;
+        s = s.substr(s.find(" ") + 1, s.size()-1);
+        string geo3 = s.substr(0, s.find(","));
+        if(s[s.find(",") + 1] == ' ')
+            s = s.substr(s.find(",") + 2, s.size() -1);
+        else
+            s = s.substr(s.find(",") + 1, s.size() -1);
+        
+        string geo4 = s;
+        cout << geo3 << ", " << geo4 << endl;
+        
+        int numAttract = 0;
+        infile >> numAttract;
+        infile.ignore(10000, '\n');
+        for(int i = 0; i < numAttract; i++){
+            getline(infile,s);
+            string attractName = s.substr(0, s.find("|"));
+            cout << attractName << endl;
+            s = s.substr(s.find("|") + 1, s.size() -1);
+            string geo5 = s.substr(0, s.find(","));
+            if(s[s.find(",") + 1] == ' ')
+                s = s.substr(s.find(",") + 2, s.size() -1);
+            else
+                s = s.substr(s.find(",") + 1, s.size() -1);
+            string geo6 = s;
+            cout << geo5 << ", " << geo6 << endl;
+        }
     }
-    //    while(getline(infile, s)){
-    //        cout << s << endl;
-    //        getline(infile, t);
-    //        cout << t << endl;
-    //        infile >> k;
-    //        infile.ignore(10000, '\n');
-    //        for(int i = 0; i < k; i++){
-    //            getline(infile, s);
-    //            cout << s << endl;
-    //        }
-    //    }
+    
+
     
 }
 
@@ -102,15 +110,10 @@ void testStructCopy(GeoSegment & gs){ //Test for object copying
 }
 
 int main(){
-//    testInfile();
+    testInfile();
 //    GeoSegment test_g_seg;
 //    testStructCopy(test_g_seg);
 //    cout << test_g_seg.start.latitude << endl;
     
-    string imright = "I'm totally right";
-    for(int i = 0; i < imright.size(); i++){
-        imright[i] = tolower(imright[i]);
-    }
-    cout << imright << endl;
 }
 
