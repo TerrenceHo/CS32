@@ -34,7 +34,7 @@ after deleting 20               50
 
 2) a)
 Node {
-    Constructor
+    Node(Node * p, int value):parent(p), data(value), lhs(nullptr), rhs(nullptr){}
     Node * parent;
     Node * lhs;
     Node * rhs;
@@ -48,7 +48,7 @@ void insert(Node * curr, int value,){
 
 void insertHelper(Node * curr, int value, Node * parent){
     if curr == nullptr 
-        create a new node here with value, and set its parent equal to parent
+        set curr = Node(parent, value), creating a new leaf Node at curr, with it's parent pointer pointing from where it came from.
     else if value < curr.data 
         call insertHelper with parameters curr.lhs, value, curr
     else if value > curr.data 
