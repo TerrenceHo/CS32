@@ -11,12 +11,14 @@
 #include <string>
 using namespace std;
 
+//bool operator for < for GeoCoords
 bool operator<(const GeoCoord &lhs, const GeoCoord &rhs) {
     if(lhs.latitude == rhs.latitude)
         return lhs.longitude < rhs.longitude;
     return lhs.latitude < rhs.latitude;
 }
 
+//bool operator for > for GeoCoords
 bool operator>(const GeoCoord &lhs, const GeoCoord &rhs){
     if(lhs.latitude == rhs.latitude)
         return lhs.longitude > rhs.longitude;
@@ -24,10 +26,12 @@ bool operator>(const GeoCoord &lhs, const GeoCoord &rhs){
 
 }
 
+//bool operator for == for GeoCoords
 bool operator ==(const GeoCoord &lhs, const GeoCoord &rhs){
     return (lhs.latitude == rhs.latitude) and (lhs.longitude == rhs.longitude);
 }
 
+//returns string of of direction based on angles
 string directionOfLine(const GeoSegment& gs){
     double angle = angleOfLine(gs);
     if(angle > 337.5)

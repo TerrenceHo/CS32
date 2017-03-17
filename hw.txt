@@ -34,6 +34,7 @@ after deleting 20               50
 
 2) a)
 Node {
+    Constructor
     Node * parent;
     Node * lhs;
     Node * rhs;
@@ -81,7 +82,7 @@ c)O(log(C) + log(S))
 d)O(log(S))
 e)O(1)
 f)O(log(C) + S)
-g)O(1 + S) = O(S)
+g)O(Slog(S))
 h)O(C * log(S))
 
 
